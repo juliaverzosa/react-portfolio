@@ -199,7 +199,7 @@ img {
   min-height: 48px;
   padding: 13px 23px;
   border-radius: 30px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   transition: 0.25s ease;
 }
@@ -259,7 +259,7 @@ img {
 }
 
 .hero-content h2 {
-  max-width: 600px;
+  max-width: 400px;
   font-size: clamp(18px, 2vw, 24px);
   font-weight: 400;
   line-height: 1.5;
@@ -270,7 +270,7 @@ img {
 }
 
 .hero-content p {
-  max-width: 590px;
+  max-width: 400px;
   font-size: 15px;
   margin-bottom: 30px;
   text-align: left;
@@ -635,7 +635,7 @@ img {
 }
 
 .tech-description h2 {
-  font-size: 42px;
+  font-size: 36px;
   margin-bottom: 15px;
   color: var(--text);
 }
@@ -646,7 +646,8 @@ img {
 }
 
 .skills-window {
-  width: 100%;
+  width: 120%;
+  transform: translateX(-100px);
   overflow: hidden;
   padding: 20px 0;
   mask-image: linear-gradient(
@@ -661,13 +662,13 @@ img {
 .skills-track {
   display: flex;
   width: max-content;
-  gap: 18px;
+  gap: 10px;
   animation: slideSkills 25s linear infinite;
 }
 
-.skills-window:hover .skills-track {
+/* .skills-window:hover .skills-track {
   animation-play-state: paused;
-}
+} */
 
 .skill-card {
   min-width: 145px;
@@ -677,26 +678,26 @@ img {
   align-items: center;
   justify-content: center;
   gap: 15px;
-  background: var(--surface);
+  /* background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 18px; */
   transition: 0.3s ease;
 }
 
 .skill-card:hover {
   transform: translateY(-8px);
-  box-shadow: var(--shadow);
+  /* box-shadow: var(--shadow); */
 }
 
 .skill-icon {
-  width: 48px;
-  height: 48px;
+  width: 80px;
+  height: 80px;
 }
 
 .skill-card small {
   color: var(--text);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 /* =========================================

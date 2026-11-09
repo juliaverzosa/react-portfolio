@@ -109,47 +109,59 @@ const certificates = [
 
 const projects = [
   {
-    title: "E-Commerce Platform",
+    title: "ExpenSure",
     description:
-      "A modern shopping experience designed to make online shopping simple and enjoyable.",
-    stack: ["React", "JavaScript", "CSS"],
+      "An expense tracker web application that will help user manage their expenses in a simple and efficient way.",
+    stack: ["HTML", "JavaScript", "CSS", "PHP", "MySQL"],
     images: [
-      "/projects/ecommerce-1.png",
-      "/projects/ecommerce-2.png",
-      "/projects/ecommerce-3.png",
+      "/projects/expensure/expensure1.png",
+      "/projects/expensure/expensure2.png",
+      "/projects/expensure/expensure3.png",
+      "/projects/expensure/expensure4.png",
+      "/projects/expensure/expensure5.png",
+      "/projects/expensure/expensure6.png",
     ],
   },
   {
-    title: "TaskFlow App",
+    title: "Palette App",
     description:
-      "A simple productivity application for organizing tasks and tracking progress.",
-    stack: ["React", "Firebase", "CSS"],
+      "A mobile app with the goal of providing a platform where artists can freely showcase their artwork, interact, and build a digital portfolio.",
+    stack: ["Flutter", "Dart", "Firebase", "Supabase"],
     images: [
-      "/projects/taskflow-1.png",
-      "/projects/taskflow-2.png",
-      "/projects/taskflow-3.png",
+      "/projects/palette/palette1.png",
+      "/projects/palette/palette2.png",
+      "/projects/palette/palette3.png",
+      "/projects/palette/palette4.png",
+      "/projects/palette/palette5.png",
+      "/projects/palette/palette6.png",
+      
     ],
   },
   {
-    title: "Media Dashboard",
+    title: "NK Tools Tracker",
     description:
-      "A clean dashboard that brings media content and useful insights together.",
-    stack: ["React", "Node.js", "MongoDB"],
+      "A mobile application for tracking and managing Globe/NK technicians' tools.",
+    stack: ["Flutter", "Dart", "Firebase", "Firestore"],
     images: [
-      "/projects/dashboard-1.png",
-      "/projects/dashboard-2.png",
-      "/projects/dashboard-3.png",
+      "/projects/tools_tracker/tools_tracker1.png",
+      "/projects/tools_tracker/tools_tracker2.png",
+      "/projects/tools_tracker/tools_tracker3.png",
+      "/projects/tools_tracker/tools_tracker4.png",
+      "/projects/tools_tracker/tools_tracker5.png",
     ],
   },
   {
-    title: "Analytics Pro",
+    title: "Solar Energy Potential Forecasting Web App",
     description:
-      "An analytics interface that turns information into clear visual insights.",
-    stack: ["React", "Python", "Chart.js"],
+      "Feature-Importance-Aware AdaBoost (FI-AdaBoost) Regression model for more interpretable and reliable solar energy potential forecasting.",
+    stack: ["Python", "React", "TypeScript", "HTML", "CSS"],
     images: [
-      "/projects/analytics-1.png",
-      "/projects/analytics-2.png",
-      "/projects/analytics-3.png",
+      "/projects/fi-adaboost/fi-adaboost1.png",
+      "/projects/fi-adaboost/fi-adaboost2.png",
+      "/projects/fi-adaboost/fi-adaboost3.png",
+      "/projects/fi-adaboost/fi-adaboost4.png",
+      "/projects/fi-adaboost/fi-adaboost5.png",
+      "/projects/fi-adaboost/fi-adaboost6.png",
     ],
   },
 ];
@@ -361,7 +373,6 @@ function App() {
           <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#projects">Projects</a>
-          <a href="#tech-stack">Skills</a>
           <a href="#contact">Contact</a>
         </nav>
 
