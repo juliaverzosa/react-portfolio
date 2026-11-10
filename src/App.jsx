@@ -1,5 +1,5 @@
-
 import { useState, useEffect } from "react";
+
 import {
   Sun,
   Moon,
@@ -12,6 +12,12 @@ import {
   Code,
   BriefcaseBusiness,
   Users,
+  GraduationCap,
+  Palette,
+  Handshake,
+  BookOpen,
+  Laptop,
+  Maximize2,
 } from "lucide-react";
 
 import {
@@ -24,18 +30,97 @@ import {
   SiPython,
 } from "react-icons/si";
 
-import {
-  FaLinkedinIn,
-  FaGithub,
-  FaFacebookF,
-  FaCss3Alt,
-} from "react-icons/fa";
+import { FaCss3Alt } from "react-icons/fa";
 
 import "./App.css";
 
-// ==============================
+// =========================================
+// JOURNEY - Work Experience, Leadership, Education
+// =========================================
+
+const journeyItems = [
+  {
+    category: "Education",
+    title: "Bachelor of Science in Computer Science",
+    organization: "University of Mindanao",
+    date: "September 2022 – September 2026",
+    highlights: [
+      "Graduated Summa Cum Laude.",
+      "Earned a degree in Computer Science.",
+    ],
+    icon: GraduationCap,
+  },
+  {
+    category: "Experience",
+    title: "Web Developer / Designer",
+    organization: "Consumr Buzz",
+    date: "January 2026 – June 2026",
+    highlights: [
+      "Designed and built responsive websites using Duda.",
+      "Customized features with HTML, CSS, and JavaScript, and created visual assets.",
+    ],
+    icon: Laptop,
+  },
+  {
+    category: "Experience",
+    title: "Broadband Intern",
+    organization: "Globe Telecom Inc.",
+    date: "July 2025 – August 2025",
+    highlights: [
+      "Developed a mobile app for field technicians' tool tracking.",
+      "Supported team operations and reporting, and built a Python tool to automate log entry.",
+    ],
+    icon: Laptop,
+  },
+  {
+    category: "Experience",
+    title: "Illustrator",
+    organization: "Freelance / Commissioned",
+    date: "2022 – 2025",
+    highlights: [
+      "Created custom digital illustrations for international clients.",
+      "Adapted art styles to client needs and managed revisions and delivery.",
+    ],
+    icon: Palette,
+  },
+  {
+    category: "Affiliation",
+    title: "Membership and Community Keeper",
+    organization: "Data Owls of the University of Mindanao",
+    date: "2024 – 2025",
+    highlights: [
+      "Served as a core member of a student-led organization.",
+      "Supported a community focused on data science, analytics, and technology.",
+    ],
+    icon: Users,
+  },
+  {
+    category: "Affiliation",
+    title: "Volunteer",
+    organization: "University of Mindanao Student Developers Community",
+    date: "2024 – 2025",
+    highlights: [
+      "Volunteered in community initiatives and collaborative learning.",
+      "Participated in activities of the UM Student Developers Community.",
+    ],
+    icon: Handshake,
+  },
+  {
+    category: "Education",
+    title: "STEM Strand",
+    organization: "Philippine Academy of Sakya Davao, Inc.",
+    date: "2020 – 2022",
+    highlights: [
+      "Graduated Rank 1 in the STEM strand.",
+      "Received 4th Honorable Mention overall.",
+    ],
+    icon: BookOpen,
+  },
+];
+
+// =========================================
 // TECH STACK
-// ==============================
+// =========================================
 
 const skills = [
   { name: "React", icon: SiReact, color: "#61DAFB" },
@@ -48,9 +133,9 @@ const skills = [
   { name: "Python", icon: SiPython, color: "#3776AB" },
 ];
 
-// ==============================
+// =========================================
 // CERTIFICATIONS
-// ==============================
+// =========================================
 
 const certificates = [
   {
@@ -103,15 +188,15 @@ const certificates = [
   },
 ];
 
-// ==============================
+// =========================================
 // PROJECTS
-// ==============================
+// =========================================
 
 const projects = [
   {
     title: "ExpenSure",
     description:
-      "An expense tracker web application that will help user manage their expenses in a simple and efficient way.",
+      "An expense tracker web application that will help users manage their expenses in a simple and efficient way.",
     stack: ["HTML", "JavaScript", "CSS", "PHP", "MySQL"],
     images: [
       "/projects/expensure/expensure1.png",
@@ -125,7 +210,7 @@ const projects = [
   {
     title: "Palette App",
     description:
-      "A mobile app with the goal of providing a platform where artists can freely showcase their artwork, interact, and build a digital portfolio.",
+      "A mobile app that provides a platform where artists can showcase their artwork, interact, and build a digital portfolio.",
     stack: ["Flutter", "Dart", "Firebase", "Supabase"],
     images: [
       "/projects/palette/palette1.png",
@@ -134,7 +219,6 @@ const projects = [
       "/projects/palette/palette4.png",
       "/projects/palette/palette5.png",
       "/projects/palette/palette6.png",
-      
     ],
   },
   {
@@ -153,7 +237,7 @@ const projects = [
   {
     title: "Solar Energy Potential Forecasting Web App",
     description:
-      "Feature-Importance-Aware AdaBoost (FI-AdaBoost) Regression model for more interpretable and reliable solar energy potential forecasting.",
+      "A Feature-Importance-Aware AdaBoost (FI-AdaBoost) regression model for more interpretable and reliable solar energy potential forecasting.",
     stack: ["Python", "React", "TypeScript", "HTML", "CSS"],
     images: [
       "/projects/fi-adaboost/fi-adaboost1.png",
@@ -166,14 +250,70 @@ const projects = [
   },
 ];
 
-// ==============================
+// =========================================
+// TYPING EFFECT
+// =========================================
+
+function TypingRole() {
+  const roles = [
+    "Developer",
+    "Illustrator",
+    "Designer",
+    "Aspiring Data Scientist",
+  ];
+
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentRole = roles[roleIndex];
+
+    let delay = deleting ? 45 : 100;
+
+    if (!deleting && text === currentRole) {
+      delay = 1200;
+    }
+
+    if (deleting && text === "") {
+      delay = 400;
+    }
+
+    const timer = setTimeout(() => {
+      if (!deleting && text === currentRole) {
+        setDeleting(true);
+      } else if (deleting && text === "") {
+        setDeleting(false);
+        setRoleIndex((current) => (current + 1) % roles.length);
+      } else {
+        setText(
+          currentRole.substring(
+            0,
+            text.length + (deleting ? -1 : 1)
+          )
+        );
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [text, deleting, roleIndex]);
+
+  return (
+    <span className="typing-role">
+      {text}
+      <span className="typing-cursor">|</span>
+    </span>
+  );
+}
+
+// =========================================
 // PROJECT POPUP
-// ==============================
+// =========================================
 
 function ProjectModal({ project, onClose }) {
   const [imageIndex, setImageIndex] = useState(0);
-
   const images = project.images || [];
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
 
   const nextImage = () => {
     setImageIndex((current) => (current + 1) % images.length);
@@ -188,8 +328,14 @@ function ProjectModal({ project, onClose }) {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") onClose();
-      if (event.key === "ArrowRight") nextImage();
-      if (event.key === "ArrowLeft") previousImage();
+
+      if (images.length > 1 && event.key === "ArrowRight") {
+        nextImage();
+      }
+
+      if (images.length > 1 && event.key === "ArrowLeft") {
+        previousImage();
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -213,23 +359,75 @@ function ProjectModal({ project, onClose }) {
           <X />
         </button>
 
-        {/* PROJECT IMAGE CAROUSEL */}
-
         <div className="modal-gallery">
           <div className="modal-image-wrapper">
-            <img
-              className="modal-main-image"
-              src={images[imageIndex]}
-              alt={`${project.title} screenshot ${imageIndex + 1}`}
-              onError={(event) => {
-                event.currentTarget.style.display = "none";
-              }}
-            />
+  <img
+    src={project.images[imageIndex]}
+    alt={`${project.title} screenshot ${imageIndex + 1}`}
+    className="modal-main-image clickable-image"
+    onClick={() => setIsImageExpanded(true)}
+  />
 
-            <div className="image-fallback modal-fallback">
-              {project.title} Preview
-            </div>
-          </div>
+  <button
+    className="image-expand-button"
+    onClick={() => setIsImageExpanded(true)}
+    aria-label="Expand image"
+  >
+    <Maximize2 size={20} />
+  </button>
+
+  {isImageExpanded && (
+  <div
+    className="image-lightbox"
+    onClick={() => setIsImageExpanded(false)}
+  >
+    <button
+      className="lightbox-close"
+      onClick={() => setIsImageExpanded(false)}
+      aria-label="Close image viewer"
+    >
+      <X size={26} />
+    </button>
+
+    <button
+      className="lightbox-arrow lightbox-prev"
+      onClick={(e) => {
+        e.stopPropagation();
+        setImageIndex((prev) =>
+          prev === 0 ? project.images.length - 1 : prev - 1
+        );
+      }}
+      aria-label="Previous image"
+    >
+      <ChevronLeft size={30} />
+    </button>
+
+    <img
+      src={project.images[imageIndex]}
+      alt={`${project.title} screenshot ${imageIndex + 1}`}
+      className="lightbox-image"
+      onClick={(e) => e.stopPropagation()}
+    />
+
+    <button
+      className="lightbox-arrow lightbox-next"
+      onClick={(e) => {
+        e.stopPropagation();
+        setImageIndex((prev) =>
+          prev === project.images.length - 1 ? 0 : prev + 1
+        );
+      }}
+      aria-label="Next image"
+    >
+      <ChevronRight size={30} />
+    </button>
+
+    <div className="lightbox-counter">
+      {imageIndex + 1} / {project.images.length}
+    </div>
+  </div>
+)}
+</div>
 
           {images.length > 1 && (
             <div className="modal-gallery-controls">
@@ -277,8 +475,6 @@ function ProjectModal({ project, onClose }) {
           </div>
         </div>
 
-        {/* PROJECT INFORMATION */}
-
         <div className="modal-information">
           <span className="eyebrow">FEATURED PROJECT</span>
 
@@ -299,9 +495,9 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
-// ==============================
+// =========================================
 // MAIN APP
-// ==============================
+// =========================================
 
 function App() {
   const [dark, setDark] = useState(false);
@@ -309,48 +505,22 @@ function App() {
   const [projectIndex, setProjectIndex] = useState(0);
   const [activeCertificate, setActiveCertificate] = useState(0);
 
-  // ==============================
-  // PROJECT AUTO ROTATION
-  // ==============================
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProjectIndex(
-        (current) => (current + 1) % projects.length
-      );
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  // ==============================
-  // PROJECT NAVIGATION
-  // ==============================
-
+  // Project navigation
   const nextProject = () => {
-    setProjectIndex(
-      (current) => (current + 1) % projects.length
-    );
+    setProjectIndex((current) => (current + 1) % projects.length);
   };
 
   const previousProject = () => {
     setProjectIndex(
-      (current) =>
-        (current - 1 + projects.length) % projects.length
+      (current) => (current - 1 + projects.length) % projects.length
     );
   };
 
   const orderedProjects = projects.map(
-    (_, index) =>
-      projects[(projectIndex + index) % projects.length]
+    (_, index) => projects[(projectIndex + index) % projects.length]
   );
 
-  // ==============================
-  // CERTIFICATION NAVIGATION
-  // Clicking the front image moves
-  // to the next certificate.
-  // ==============================
-
+  // Certificate navigation
   const nextCertificate = () => {
     setActiveCertificate(
       (current) => (current + 1) % certificates.length
@@ -360,10 +530,7 @@ function App() {
   return (
     <div className={dark ? "app dark" : "app"}>
 
-      {/* ==============================
-          NAVIGATION
-      ============================== */}
-
+      {/* NAVIGATION */}
       <header className="navbar">
         <a href="#home" className="logo">
           Julia<span>.</span>
@@ -372,6 +539,7 @@ function App() {
         <nav>
           <a href="#home">Home</a>
           <a href="#about">About</a>
+          <a href="#journey">Journey</a>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -385,20 +553,16 @@ function App() {
         </button>
       </header>
 
-      {/* ==============================
-          HOME
-      ============================== */}
-
+      {/* HOME */}
       <section className="hero section-container" id="home">
         <div className="hero-content">
           <h1>
             Hi, I'm <span>Julia!</span>
           </h1>
 
-          <h2>
-            Full-stack developer, illustrator,
-            and an aspiring data scientist.
-          </h2>
+          <p className="hero-description">
+            <TypingRole />
+          </p>
 
           <div className="hero-buttons">
             <a href="#projects" className="button primary">
@@ -415,32 +579,13 @@ function App() {
           </div>
         </div>
 
-        <div className="hero-image">
-          <div className="orbit"></div>
-
-          <div className="portrait hero-portrait">
-            <img
-              src="/me_photo.png"
-              alt="Julia"
-              onError={(event) => {
-                event.currentTarget.style.display = "none";
-              }}
-            />
-          </div>
-        </div>
+        {/* Optional portrait image can go here. */}
       </section>
 
-      {/* ==============================
-          ABOUT + CERTIFICATIONS
-      ============================== */}
-
+      {/* ABOUT + CERTIFICATIONS */}
       <section className="about-section" id="about">
         <div className="about-container">
-
-          {/* LEFT SIDE: ABOUT */}
-
           <div className="about-content">
-
             <h2>
               A Little About <span>Me.</span>
             </h2>
@@ -464,19 +609,13 @@ function App() {
             </div>
           </div>
 
-          {/* RIGHT SIDE: CERTIFICATIONS */}
-
           <div className="certificate-area">
-            <div className="certificate-heading">
-
-            </div>
+            <div className="certificate-heading"></div>
 
             <div className="certificate-stack">
               {certificates.map((certificate, index) => {
                 const position =
-                  (index -
-                    activeCertificate +
-                    certificates.length) %
+                  (index - activeCertificate + certificates.length) %
                   certificates.length;
 
                 return (
@@ -499,11 +638,6 @@ function App() {
                         nextCertificate();
                       }
                     }}
-                    aria-label={
-                      position === 0
-                        ? `View next certificate. Current certificate: ${certificate.title}`
-                        : undefined
-                    }
                   >
                     <img
                       src={certificate.image}
@@ -539,16 +673,81 @@ function App() {
         </div>
       </section>
 
-      {/* ==============================
-          TECH STACK
-      ============================== */}
+      {/* MY JOURNEY */}
+      <section className="journey-section" id="journey">
+        <div className="journey-container">
+          <div className="journey-heading">
+            <span className="eyebrow">MY JOURNEY</span>
 
-      <section
-        className="tech-section section-container"
-        id="tech-stack"
-      >
+            <h2>
+              Experiences, Education,
+              <br />
+              and <span>Affiliations</span>
+            </h2>
+
+            <p>
+              A look at the experiences, milestones, and communities
+              that have shaped my journey.
+            </p>
+
+            <div className="journey-heading-line"></div>
+          </div>
+
+          <div className="journey-timeline">
+            <div className="journey-line"></div>
+
+            {journeyItems.map((item, index) => {
+              const JourneyIcon = item.icon;
+              const isLeft = index % 2 === 0;
+
+              return (
+                <article
+                  className={`journey-item ${
+                    isLeft ? "journey-left" : "journey-right"
+                  }`}
+                  key={`${item.organization}-${item.title}`}
+                >
+                  <div className="journey-card">
+                    <span className="journey-category">
+                      <JourneyIcon size={18} />
+                      {item.category}
+                    </span>
+
+                    <h3>{item.title}</h3>
+
+                    <h4>{item.organization}</h4>
+
+                    <span className="journey-date">
+                      {item.date}
+                    </span>
+
+                    {/* Details appear in a hover popup */}
+                    <div className="journey-hover-details">
+                      <ul>
+                        {item.highlights.slice(0, 2).map(
+                          (highlight, highlightIndex) => (
+                            <li key={highlightIndex}>
+                              {highlight}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="journey-marker">
+                    <JourneyIcon size={25} />
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* TECH STACK */}
+      <section className="tech-section section-container" id="tech-stack">
         <div className="tech-description">
-         
           <h2>
             Tech <span>Stack</span>
           </h2>
@@ -558,43 +757,39 @@ function App() {
           </p>
         </div>
 
-<div className="skills-window">
-  <div className="skills-track">
-    {[...skills, ...skills].map((skill, index) => {
-      const SkillIcon = skill.icon;
+        <div className="skills-window">
+          <div className="skills-track">
+            {[...skills, ...skills].map((skill, index) => {
+              const SkillIcon = skill.icon;
 
-      return (
-        <div className="skill-card" key={`${skill.name}-${index}`}>
-          <SkillIcon
-            className="skill-icon"
-            style={{ color: skill.color }}
-          />
-          <small>{skill.name}</small>
+              return (
+                <div
+                  className="skill-card"
+                  key={`${skill.name}-${index}`}
+                >
+                  <SkillIcon
+                    className="skill-icon"
+                    style={{ color: skill.color }}
+                  />
+                  <small>{skill.name}</small>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      );
-    })}
-  </div>
-</div>
       </section>
 
-      {/* ==============================
-          FEATURED PROJECTS
-      ============================== */}
-
-      <section
-        className="projects section-container"
-        id="projects"
-      >
-<div className="projects-heading">
-  <h2>Featured Projects</h2>
-  <p>
-    Explore some of the projects I've worked on and the ideas I've brought to life.
-  </p>
-</div>
-
+      {/* FEATURED PROJECTS */}
+      <section className="projects section-container" id="projects">
+        <div className="projects-heading">
+          <h2>Featured Projects</h2>
+          <p>
+            Explore some of the projects I've worked on and the ideas
+            I've brought to life.
+          </p>
+        </div>
 
         <div className="project-grid">
-          
           {orderedProjects.map((project) => (
             <article
               className="project-card"
@@ -603,10 +798,7 @@ function App() {
               tabIndex={0}
               role="button"
               onKeyDown={(event) => {
-                if (
-                  event.key === "Enter" ||
-                  event.key === " "
-                ) {
+                if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
                   setSelectedProject(project);
                 }
@@ -642,29 +834,27 @@ function App() {
               </div>
             </article>
           ))}
-
-          
         </div>
-        
-<div className="project-arrows">
-  <button onClick={previousProject}>
-    <ChevronLeft size={20} />
-  </button>
 
-  <button onClick={nextProject}>
-    <ChevronRight size={20} />
-  </button>
-</div>
+        <div className="project-arrows">
+          <button
+            onClick={previousProject}
+            aria-label="Previous projects"
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          <button
+            onClick={nextProject}
+            aria-label="Next projects"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
       </section>
 
-      {/* ==============================
-          CONTACT
-      ============================== */}
-
-      <section
-        className="contact section-container"
-        id="contact"
-      >
+      {/* CONTACT */}
+      <section className="contact section-container" id="contact">
         <div className="contact-content">
           <span className="eyebrow">✦ GET IN TOUCH</span>
 
@@ -717,10 +907,7 @@ function App() {
         </div>
       </section>
 
-      {/* ==============================
-          FOOTER
-      ============================== */}
-
+      {/* FOOTER */}
       <footer className="footer section-container">
         <a href="#home" className="logo">
           Julia<span>.</span>
@@ -731,10 +918,7 @@ function App() {
         </p>
       </footer>
 
-      {/* ==============================
-          PROJECT DETAILS POPUP
-      ============================== */}
-
+      {/* PROJECT DETAILS POPUP */}
       {selectedProject && (
         <ProjectModal
           project={selectedProject}
