@@ -348,8 +348,6 @@ img {
   padding: 110px var(--page-gutter);
   background: var(--background);
   color: var(--text);
-
-  /* Allow hover popups to extend outside cards */
   overflow: visible;
 }
 
@@ -398,8 +396,6 @@ img {
   background: var(--accent);
 }
 
-/* Timeline layout */
-
 .journey-timeline {
   position: relative;
   width: 100%;
@@ -407,7 +403,7 @@ img {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 45px;
+  gap: 0px;
   overflow: visible;
 }
 
@@ -422,8 +418,6 @@ img {
   transform: translateX(-50%);
 }
 
-/* Timeline entries */
-
 .journey-item {
   position: relative;
   display: grid;
@@ -434,14 +428,10 @@ img {
   overflow: visible;
 }
 
-/* Bring the hovered timeline entry above its neighbors */
-
 .journey-item:hover,
 .journey-item:focus-within {
   z-index: 20;
 }
-
-/* Journey card */
 
 .journey-card {
   position: relative;
@@ -462,8 +452,8 @@ img {
 
 .journey-card:hover {
   transform: translateY(-5px);
-  border-color: var(--accent);
-  box-shadow: 0 18px 40px rgba(237, 35, 139, 0.12);
+  /* background-color: var(--accent); */
+  /* box-shadow: 0 18px 40px rgba(237, 35, 139, 0.11); */
 }
 
 .journey-left .journey-card {
@@ -476,15 +466,13 @@ img {
   justify-self: start;
 }
 
-/* Center icon marker */
-
 .journey-marker {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
   z-index: 2;
-  width: 76px;
-  height: 76px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -494,8 +482,6 @@ img {
   background: var(--surface);
   box-shadow: 0 5px 20px rgba(237, 35, 139, 0.12);
 }
-
-/* Card content */
 
 .journey-category {
   display: inline-flex;
@@ -508,6 +494,7 @@ img {
   color: var(--accent);
   font-size: 14px;
   font-weight: 700;
+  text-transform: uppercase;
 }
 
 .journey-card h3 {
@@ -531,9 +518,7 @@ img {
   font-weight: 600;
 }
 
-/* =========================================
-   JOURNEY HOVER POPUP
-========================================= */
+/* JOURNEY HOVER POPUP */
 
 .journey-hover-details {
   position: absolute;
@@ -541,29 +526,19 @@ img {
   left: 0;
   width: 100%;
   padding: 15px 20px;
-
-  border: 1px solid #ffb5d0;
   border-radius: 13px;
   background: var(--surface);
   color: var(--text);
-
-  box-shadow: 0 10px 30px rgba(237, 35, 139, 0.13);
-
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-
   transform: translateY(-8px);
-
   transition:
     opacity 0.25s ease,
     transform 0.25s ease,
     visibility 0.25s ease;
-
   z-index: 30;
 }
-
-/* Show popup when hovering or keyboard-focusing a card */
 
 .journey-card:hover .journey-hover-details,
 .journey-card:focus-within .journey-hover-details {
@@ -573,8 +548,6 @@ img {
   transform: translateY(0);
 }
 
-/* Popup bullet list */
-
 .journey-hover-details ul {
   margin: 0;
   padding-left: 18px;
@@ -583,24 +556,20 @@ img {
 .journey-hover-details li {
   padding: 3px 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
 }
 
 .journey-hover-details li::marker {
-  color: var(--accent);
+  color: var(--muted);
 }
-
-/* Keep popup above neighboring cards */
 
 .journey-item:hover .journey-card,
 .journey-item:focus-within .journey-card {
   z-index: 30;
 }
 
-/* =========================================
-   JOURNEY RESPONSIVE
-========================================= */
+/* JOURNEY RESPONSIVE */
 
 @media (max-width: 800px) {
   .journey-section {
@@ -647,19 +616,15 @@ img {
   }
 }
 
-/* On touchscreens, show the details without requiring hover */
-
 @media (hover: none) {
   .journey-hover-details {
     position: static;
     width: 100%;
     margin-top: 14px;
-
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
     transform: none;
-
     box-shadow: none;
     background: var(--surface-soft);
   }
@@ -741,9 +706,9 @@ img {
   max-width: 1500px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 1.2fr 0.8fr;
   align-items: center;
-  gap: clamp(40px, 7vw, 100px);
+  gap: clamp(40px, 7vw, 60px);
 }
 
 .about-content {
@@ -800,7 +765,7 @@ img {
   border-radius: 50%;
 }
 
-/* Certificate area */
+/* CERTIFICATE AREA */
 
 .certificate-area {
   display: flex;
@@ -987,84 +952,320 @@ img {
 }
 
 /* =========================================
-   TECH STACK
+   ABOUT ME - PERSONALITY & INTEREST TAGS
+========================================= */
+
+.about-intro-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  margin-top: 28px;
+}
+
+.about-tag-group {
+  width: 100%;
+  min-width: 0;
+}
+
+.about-tag-group h3 {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 13px;
+}
+
+.about-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.about-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 7px 12px;
+  border: 0.75px solid var(--accent);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: normal;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+}
+
+.about-tag:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  font-weight: 450;
+}
+
+
+/* =========================================
+   TECHNICAL PROFICIENCY - ORGANIC SKILL CLOUD
 ========================================= */
 
 .tech-section {
-  min-height: 330px;
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  align-items: center;
-  gap: 60px;
-  padding-top: 85px;
-  padding-bottom: 85px;
+  padding: 110px var(--page-gutter);
+  overflow: hidden;
 }
 
-.tech-description h2 {
-  font-size: 36px;
-  margin-bottom: 15px;
+.tech-container {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.tech-heading {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 35px;
+}
+
+.tech-heading h2 {
+  font-size: clamp(36px, 4vw, 54px);
+  line-height: 1.15;
+  letter-spacing: -1.5px;
   color: var(--text);
 }
 
-.tech-description p {
-  max-width: 360px;
-  font-size: 14px;
+.tech-heading p {
+  color: var(--muted);
+  line-height: 1.8;
 }
 
-.skills-window {
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-  padding: 20px 0;
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 8%,
-    black 92%,
-    transparent
-  );
-}
+/* CATEGORY FILTERS */
 
-.skills-track {
+.skill-categories {
   display: flex;
-  width: max-content;
-  gap: 16px;
-  animation: slideSkills 25s linear infinite;
-}
-
-.skills-window:hover .skills-track {
-  animation-play-state: paused;
-}
-
-.skill-card {
-  min-width: 145px;
-  height: 145px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 35px auto 30px;
+}
+
+.skill-category-button {
+  padding: 10px 19px;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: 30px;
   background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
   transition: 0.3s ease;
 }
 
-.skill-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow);
+.skill-category-button:hover,
+.skill-category-button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
 }
 
-.skill-icon {
-  width: 65px;
-  height: 65px;
+/* ORGANIC LOGO CLOUD */
+
+.skills-cloud {
+  position: relative;
+  width: 100%;
+  max-width: 11000px;
+  height: 520px;
+  margin: 0 auto;
+  overflow: visible;
 }
 
-.skill-card small {
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 500;
+/* INDIVIDUAL LOGOS */
+
+.floating-skill {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: var(--skill-left);
+  top: var(--skill-top);
+
+  width: var(--skill-size, 58px);
+  height: var(--skill-size, 58px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  z-index: 1;
+
+  animation: skillFloat 2s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+
+  transition:
+    opacity 0.35s ease,
+    filter 0.35s ease,
+    z-index 0.2s ease;
 }
+
+/* LOGO IMAGE */
+
+.floating-skill-icon {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.3s ease;
+}
+
+.floating-skill-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* CATEGORY HIGHLIGHTING */
+
+.floating-skill.highlighted {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+.floating-skill.muted {
+  opacity: 0.18;
+  filter: grayscale(1);
+}
+
+/* HOVER */
+
+.floating-skill:hover {
+  z-index: 20;
+}
+
+.floating-skill:hover .floating-skill-icon {
+  transform: scale(1.3);
+}
+
+.floating-skill.muted:hover {
+  opacity: 0.4;
+}
+
+/* TOOLTIP */
+
+.skill-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+
+  transform: translateX(-50%) translateY(5px);
+
+  padding: 7px 12px;
+  border-radius: 7px;
+
+  background: var(--text);
+  color: var(--background);
+
+  font-size: 12px;
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: 0.25s ease;
+  z-index: 30;
+}
+
+.floating-skill:hover .skill-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* FLOATING ANIMATION */
+
+@keyframes skillFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+  .tech-section {
+    padding: 85px var(--page-gutter);
+  }
+
+  .skills-cloud {
+    height: 440px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .tech-section {
+    padding: 75px 24px;
+  }
+
+  .skill-categories {
+    gap: 8px;
+    margin-bottom: 25px;
+  }
+
+  .skill-category-button {
+    padding: 8px 13px;
+    font-size: 11px;
+  }
+
+  .skills-cloud {
+    height: 390px;
+  }
+
+  .floating-skill {
+    width: calc(var(--skill-size, 50px) * 0.75);
+    height: calc(var(--skill-size, 50px) * 0.75);
+  }
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 380px) {
+  .skills-cloud {
+    height: 350px;
+  }
+
+  .floating-skill {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-skill {
+    animation: none;
+  }
+
+  .floating-skill-icon,
+  .skill-tooltip {
+    transition: none;
+  }
+}
+
+
 
 /* =========================================
    PROJECTS SECTION
@@ -1486,16 +1687,6 @@ img {
    ANIMATIONS
 ========================================= */
 
-@keyframes slideSkills {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @keyframes orbit {
   from {
     transform: rotate(0deg);
@@ -1518,11 +1709,6 @@ img {
 
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .tech-section {
-    grid-template-columns: 1fr;
-    gap: 30px;
   }
 
   .certificate-stack {
@@ -1652,12 +1838,6 @@ img {
 
   .certificate-counter {
     margin-top: 32px;
-  }
-
-  .tech-section {
-    grid-template-columns: 1fr;
-    padding-top: 75px;
-    padding-bottom: 75px;
   }
 
   .projects {
@@ -1810,7 +1990,7 @@ img {
   transform: scale(1.08);
 }
 
-/* Fullscreen viewer */
+/* FULLSCREEN VIEWER */
 
 .image-lightbox {
   position: fixed;
@@ -1893,7 +2073,7 @@ img {
   transform: translateX(-50%);
 }
 
-/* Mobile viewer */
+/* MOBILE VIEWER */
 
 @media (max-width: 600px) {
   .image-lightbox {
@@ -1934,4 +2114,152 @@ img {
   .image-expand-button {
     opacity: 1;
   }
+}
+
+/* =========================================
+   JOURNEY SCROLL-LINKED CIRCLE FILL
+========================================= */
+
+.journey-marker {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--card-bg, #fff0f7);
+  border: 1px solid var(--accent, #ff3d9a);
+}
+
+/* Pink fill animation */
+.journey-marker::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--accent, #fff0f7);
+
+  transform: scaleY(var(--fill-progress, 0));
+  transform-origin: top;
+
+  z-index: -1;
+}
+
+/* Keep the icon above the animated fill */
+.journey-marker svg {
+  position: relative;
+  z-index: 1;
+  color: var(--accent, #ff3d9a);
+  transition: color 0.2s ease;
+}
+
+/* Icon becomes white as the circle fills */
+.journey-marker[style*="--fill-progress: 1"] svg {
+  color: white;
+}
+
+
+/* =========================================
+   PARALLAX STAR BACKGROUND
+========================================= */
+
+.star-background {
+  --star-color: rgba(255, 255, 255, 0.8);
+
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow: var(--star-shadows);
+  animation: moveStars linear infinite;
+}
+
+.star-layer::after {
+  content: "";
+  position: absolute;
+  top: 100vh;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  background: transparent;
+  box-shadow: var(--star-shadows);
+}
+
+.stars-small {
+  animation-duration: 100s;
+}
+
+.stars-medium {
+  width: 2px;
+  height: 2px;
+  animation-duration: 70s;
+}
+
+.stars-large {
+  width: 3px;
+  height: 3px;
+  animation-duration: 45s;
+}
+
+@keyframes moveStars {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-100vh);
+  }
+}
+
+/* Dark theme */
+.dark .star-background {
+  --star-color: rgba(255, 255, 255, 0.75);
+}
+
+/* Light theme */
+.app:not(.dark) .star-background {
+  --star-color: rgba(237, 35, 139, 0.45);
+}
+
+/* Keep portfolio content above the stars */
+.app {
+  position: relative;
+  isolation: isolate;
+}
+
+.app > *:not(.star-background) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .star-layer {
+    animation: none;
+  }
+}
+/* =========================================
+   SHOW STAR BACKGROUND THROUGH ALL SECTIONS
+========================================= */
+
+.hero,
+.about-section,
+.about-container,
+.tech-section,
+.tech-container,
+.journey-section,
+.journey-container,
+.projects,
+.contact,
+.footer {
+  background-color: transparent !important;
 }

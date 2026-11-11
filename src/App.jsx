@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 
 import {
@@ -9,8 +10,6 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
-  Code,
-  BriefcaseBusiness,
   Users,
   GraduationCap,
   Palette,
@@ -20,17 +19,9 @@ import {
   Maximize2,
 } from "lucide-react";
 
-import {
-  SiReact,
-  SiJavascript,
-  SiHtml5,
-  SiNodedotjs,
-  SiFigma,
-  SiGit,
-  SiPython,
-} from "react-icons/si";
+import {FaLinkedin, FaGithub, FaFacebook} from "react-icons/fa";
 
-import { FaCss3Alt } from "react-icons/fa";
+import StarBackground from "./star_background";
 
 import "./App.css";
 
@@ -119,18 +110,248 @@ const journeyItems = [
 ];
 
 // =========================================
-// TECH STACK
+// TECHNICAL PROFICIENCY
+// Logo positions are generated randomly
 // =========================================
 
+const skillCategories = [
+  "Frontend",
+  "Backend",
+  "Database",
+  "Tech Tools",
+  "Creative Tools",
+  "Office Tools",
+];
+
 const skills = [
-  { name: "React", icon: SiReact, color: "#61DAFB" },
-  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
-  { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
-  { name: "CSS3", icon: FaCss3Alt, color: "#1572B6" },
-  { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
-  { name: "Figma", icon: SiFigma, color: "#F24E1E" },
-  { name: "Git", icon: SiGit, color: "#F05032" },
-  { name: "Python", icon: SiPython, color: "#3776AB" },
+  // FRONTEND
+  {
+    name: "HTML5",
+    icon: <img src="/logos/html-5.svg" alt="HTML5" />,
+    color: "#E34F26",
+    category: "Frontend",
+    size: 90,
+  },
+  {
+    name: "CSS3",
+    icon: <img src="/logos/css-3.svg" alt="CSS3" />,
+    color: "#1572B6",
+    category: "Frontend",
+    size: 90,
+  },
+  {
+    name: "React",
+    icon: <img src="/logos/react.svg" alt="React" />,
+    color: "#61DAFB",
+    category: "Frontend",
+    size: 80,
+  },
+  {
+    name: "Vite",
+    icon: <img src="/logos/vite.svg" alt="Vite" />,
+    color: "#646CFF",
+    category: "Frontend",
+    size: 80,
+  },
+  {
+    name: "JavaScript",
+    icon: <img src="/logos/javascript.svg" alt="JavaScript" />,
+    color: "#F7DF1E",
+    category: "Frontend",
+    size: 70,
+  },
+
+  // BACKEND
+  {
+    name: "Python",
+    icon: <img src="/logos/python.svg" alt="Python" />,
+    color: "#3776AB",
+    category: "Backend",
+    size:90,
+  },
+  {
+    name: "PHP",
+    icon: <img src="/logos/php.svg" alt="PHP" />,
+    color: "#777BB4",
+    category: "Backend",
+    size: 80,
+  },
+  {
+    name: "Java",
+    icon: <img src="/logos/java.svg" alt="Java" />,
+    color: "#ED8B00",
+    category: "Backend",
+    size: 70,
+  },
+  {
+    name: "Node.js",
+    icon: <img src="/logos/nodejs.svg" alt="Node.js" />,
+    color: "#5FA04E",
+    category: "Backend",
+    size: 80,
+  },
+
+  // DATABASE
+  {
+    name: "MySQL",
+    icon: <img src="/logos/mysql.svg" alt="MySQL" />,
+    color: "#4479A1",
+    category: "Database",
+    size: 80,
+  },
+  {
+    name: "Firebase",
+    icon: <img src="/logos/firebase.svg" alt="Firebase" />,
+    color: "#FFCA28",
+    category: "Database",
+    size: 80,
+  },
+  {
+    name: "Supabase",
+    icon: <img src="/logos/supabase.svg" alt="Supabase" />,
+    color: "#3ECF8E",
+    category: "Database",
+    size: 80,
+  },
+
+  // TECH TOOLS
+  {
+    name: "Git",
+    icon: <img src="/logos/git.svg" alt="Git" />,
+    color: "#F05032",
+    category: "Tech Tools",
+    size: 90,
+  },
+  {
+    name: "GitHub",
+    icon: <img src="/logos/github.svg" alt="GitHub" />,
+    color: "#8B8B8B",
+    category: "Tech Tools",
+    size: 80,
+  },
+  {
+    name: "VS Code",
+    icon: <img src="/logos/vscode.svg" alt="VS Code" />,
+    color: "#007ACC",
+    category: "Tech Tools",
+    size: 70,
+  },
+  {
+    name: "Eclipse",
+    icon: <img src="/logos/eclipse.svg" alt="Eclipse" />,
+    color: "#2C2255",
+    category: "Tech Tools",
+    size: 70,
+  },
+  {
+    name: "XAMPP",
+    icon: <img src="/logos/xampp.svg" alt="XAMPP" />,
+    color: "#FB7A24",
+    category: "Tech Tools",
+    size: 60,
+  },
+
+  // CREATIVE TOOLS
+  {
+    name: "Figma",
+    icon: <img src="/logos/figma.svg" alt="Figma" />,
+    color: "#F24E1E",
+    category: "Creative Tools",
+    size: 80,
+  },
+  {
+    name: "Canva",
+    icon: <img src="/logos/canva.svg" alt="Canva" />,
+    color: "#00C4CC",
+    category: "Creative Tools",
+    size: 70,
+  },
+  {
+    name: "ibisPaint",
+    icon: <img src="/logos/IbisPaint.svg" alt="ibisPaint" />,
+    color: "#FA6D5B",
+    category: "Creative Tools",
+    size: 80,
+  },
+  {
+    name: "CapCut",
+    icon: <img src="/logos/capcut.svg" alt="CapCut" />,
+    color: "#FFFFFF",
+    category: "Creative Tools",
+    size: 60,
+  },
+
+  // OFFICE & PRODUCTIVITY TOOLS
+  {
+    name: "Excel",
+    icon: <img src="/logos/excel.svg" alt="Excel" />,
+    color: "#217346",
+    category: "Office Tools",
+    size: 60,
+  },
+  {
+    name: "Word",
+    icon: <img src="/logos/word.svg" alt="Word" />,
+    color: "#2B579A",
+    category: "Office Tools",
+    size: 60,
+  },
+  {
+    name: "Google Sheets",
+    icon: <img src="/logos/sheets.svg" alt="Google Sheets" />,
+    color: "#34A853",
+    category: "Office Tools",
+    size: 70,
+  },
+  {
+    name: "Google Docs",
+    icon: <img src="/logos/docs.svg" alt="Google Docs" />,
+    color: "#4285F4",
+    category: "Office Tools",
+    size: 70,
+  },
+  {
+    name: "Notion",
+    icon: <img src="/logos/notion.svg" alt="Notion" />,
+    color: "#808080",
+    category: "Office Tools",
+    size: 60,
+  },
+  {
+    name: "Slack",
+    icon: <img src="/logos/slack.svg" alt="Slack" />,
+    color: "#4A154B",
+    category: "Office Tools",
+    size: 70,
+  },
+  {
+    name: "Trello",
+    icon: <img src="/logos/trello.svg" alt="Trello" />,
+    color: "#0052CC",
+    category: "Office Tools",
+    size: 70,
+  },
+  {
+    name: "Zoom",
+    icon: <img src="/logos/zoom.svg" alt="Zoom" />,
+    color: "#0B5CFF",
+    category: "Office Tools",
+    size: 60,
+  },
+  {
+    name: "Google Meet",
+    icon: <img src="/logos/google-meet.svg" alt="Google Meet" />,
+    color: "#00897B",
+    category: "Office Tools",
+    size: 60,
+  },
+  {
+    name: "Microsoft Teams",
+    icon: <img src="/logos/teams.svg" alt="Microsoft Teams" />,
+    color: "#6264A7",
+    category: "Office Tools",
+    size: 70,
+  },
 ];
 
 // =========================================
@@ -312,8 +533,8 @@ function TypingRole() {
 
 function ProjectModal({ project, onClose }) {
   const [imageIndex, setImageIndex] = useState(0);
-  const images = project.images || [];
   const [isImageExpanded, setIsImageExpanded] = useState(false);
+  const images = project.images || [];
 
   const nextImage = () => {
     setImageIndex((current) => (current + 1) % images.length);
@@ -327,14 +548,22 @@ function ProjectModal({ project, onClose }) {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        if (isImageExpanded) {
+          setIsImageExpanded(false);
+        } else {
+          onClose();
+        }
+      }
 
       if (images.length > 1 && event.key === "ArrowRight") {
-        nextImage();
+        setImageIndex((current) => (current + 1) % images.length);
       }
 
       if (images.length > 1 && event.key === "ArrowLeft") {
-        previousImage();
+        setImageIndex(
+          (current) => (current - 1 + images.length) % images.length
+        );
       }
     };
 
@@ -343,7 +572,7 @@ function ProjectModal({ project, onClose }) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose, images.length]);
+  }, [onClose, images.length, isImageExpanded]);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -361,73 +590,69 @@ function ProjectModal({ project, onClose }) {
 
         <div className="modal-gallery">
           <div className="modal-image-wrapper">
-  <img
-    src={project.images[imageIndex]}
-    alt={`${project.title} screenshot ${imageIndex + 1}`}
-    className="modal-main-image clickable-image"
-    onClick={() => setIsImageExpanded(true)}
-  />
+            <img
+              src={project.images[imageIndex]}
+              alt={`${project.title} screenshot ${imageIndex + 1}`}
+              className="modal-main-image clickable-image"
+              onClick={() => setIsImageExpanded(true)}
+            />
 
-  <button
-    className="image-expand-button"
-    onClick={() => setIsImageExpanded(true)}
-    aria-label="Expand image"
-  >
-    <Maximize2 size={20} />
-  </button>
+            <button
+              className="image-expand-button"
+              onClick={() => setIsImageExpanded(true)}
+              aria-label="Expand image"
+            >
+              <Maximize2 size={20} />
+            </button>
 
-  {isImageExpanded && (
-  <div
-    className="image-lightbox"
-    onClick={() => setIsImageExpanded(false)}
-  >
-    <button
-      className="lightbox-close"
-      onClick={() => setIsImageExpanded(false)}
-      aria-label="Close image viewer"
-    >
-      <X size={26} />
-    </button>
+            {isImageExpanded && (
+              <div
+                className="image-lightbox"
+                onClick={() => setIsImageExpanded(false)}
+              >
+                <button
+                  className="lightbox-close"
+                  onClick={() => setIsImageExpanded(false)}
+                  aria-label="Close image viewer"
+                >
+                  <X size={26} />
+                </button>
 
-    <button
-      className="lightbox-arrow lightbox-prev"
-      onClick={(e) => {
-        e.stopPropagation();
-        setImageIndex((prev) =>
-          prev === 0 ? project.images.length - 1 : prev - 1
-        );
-      }}
-      aria-label="Previous image"
-    >
-      <ChevronLeft size={30} />
-    </button>
+                <button
+                  className="lightbox-arrow lightbox-prev"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    previousImage();
+                  }}
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={30} />
+                </button>
 
-    <img
-      src={project.images[imageIndex]}
-      alt={`${project.title} screenshot ${imageIndex + 1}`}
-      className="lightbox-image"
-      onClick={(e) => e.stopPropagation()}
-    />
+                <img
+                  src={project.images[imageIndex]}
+                  alt={`${project.title} screenshot ${imageIndex + 1}`}
+                  className="lightbox-image"
+                  onClick={(event) => event.stopPropagation()}
+                />
 
-    <button
-      className="lightbox-arrow lightbox-next"
-      onClick={(e) => {
-        e.stopPropagation();
-        setImageIndex((prev) =>
-          prev === project.images.length - 1 ? 0 : prev + 1
-        );
-      }}
-      aria-label="Next image"
-    >
-      <ChevronRight size={30} />
-    </button>
+                <button
+                  className="lightbox-arrow lightbox-next"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    nextImage();
+                  }}
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={30} />
+                </button>
 
-    <div className="lightbox-counter">
-      {imageIndex + 1} / {project.images.length}
-    </div>
-  </div>
-)}
-</div>
+                <div className="lightbox-counter">
+                  {imageIndex + 1} / {project.images.length}
+                </div>
+              </div>
+            )}
+          </div>
 
           {images.length > 1 && (
             <div className="modal-gallery-controls">
@@ -504,6 +729,134 @@ function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [projectIndex, setProjectIndex] = useState(0);
   const [activeCertificate, setActiveCertificate] = useState(0);
+  const [activeSkillCategory, setActiveSkillCategory] = useState(null);
+
+const [randomizedSkills] = useState(() => {
+  const storageKey = "julia-portfolio-skill-positions-v2";
+
+  const randomNormal = () => {
+    const u = Math.max(Math.random(), 0.0001);
+    const v = Math.random();
+
+    return Math.sqrt(-2 * Math.log(u)) *
+      Math.cos(2 * Math.PI * v);
+  };
+
+  const clamp = (value, min, max) =>
+    Math.min(max, Math.max(min, value));
+
+  let savedPositions = null;
+
+  try {
+    savedPositions = JSON.parse(
+      localStorage.getItem(storageKey)
+    );
+  } catch {
+    savedPositions = null;
+  }
+
+  const hasValidPositions =
+    savedPositions &&
+    skills.every(
+      (skill) =>
+        savedPositions[skill.name]?.left &&
+        savedPositions[skill.name]?.top
+    );
+
+  if (!hasValidPositions) {
+    savedPositions = {};
+
+    // Shuffle skills so categories are mixed together.
+    const shuffledSkills = [...skills].sort(
+      () => Math.random() - 0.5
+    );
+
+    const placedSkills = [];
+
+    shuffledSkills.forEach((skill) => {
+      let bestPosition = null;
+      let bestScore = -Infinity;
+
+      // Try multiple positions to find a good spot.
+      for (let attempt = 0; attempt < 1000; attempt++) {
+        const spread = Math.random() < 0.85 ? 15 : 23;
+
+        const left = clamp(
+          50 + randomNormal() * spread,
+          12,
+          88
+        );
+
+        const top = clamp(
+          50 + randomNormal() * spread,
+          10,
+          90
+        );
+
+        let valid = true;
+        let score = Infinity;
+
+        for (const other of placedSkills) {
+          // Approximate distance using a 1100 × 460 cloud.
+          const dx = (left - other.left) * 11;
+          const dy = (top - other.top) * 4.6;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          const sameCategory =
+            skill.category === other.category;
+
+          // Same-category logos need more breathing room.
+          const minimumDistance = sameCategory
+            ? Math.max(95, (skill.size + other.size) / 2 + 25)
+            : 48;
+
+          if (distance < minimumDistance) {
+            valid = false;
+            break;
+          }
+
+          score = Math.min(score, distance);
+        }
+
+        if (valid) {
+          bestPosition = { left, top };
+          break;
+        }
+
+        // Remember the least crowded candidate as a fallback.
+        if (score > bestScore) {
+          bestScore = score;
+          bestPosition = { left, top };
+        }
+      }
+
+      savedPositions[skill.name] = {
+        left: `${bestPosition.left}%`,
+        top: `${bestPosition.top}%`,
+      };
+
+      placedSkills.push({
+        ...skill,
+        left: bestPosition.left,
+        top: bestPosition.top,
+      });
+    });
+
+    try {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify(savedPositions)
+      );
+    } catch {
+      // Keep the generated positions for this page session.
+    }
+  }
+
+  return skills.map((skill) => ({
+    ...skill,
+    position: savedPositions[skill.name],
+  }));
+});
 
   // Project navigation
   const nextProject = () => {
@@ -527,9 +880,61 @@ function App() {
     );
   };
 
-  return (
-    <div className={dark ? "app dark" : "app"}>
+  // Scroll-linked animation for journey timeline circles
+useEffect(() => {
+  const updateJourneyProgress = () => {
+    const markers = document.querySelectorAll(".journey-marker");
 
+    markers.forEach((marker) => {
+      const rect = marker.getBoundingClientRect();
+
+      // Start filling as the circle approaches the lower-middle
+      // portion of the viewport.
+      const start = window.innerHeight * 0.75;
+      const end = window.innerHeight * 0.45;
+
+      const progress = Math.min(
+        1,
+        Math.max(0, (start - rect.top) / (start - end))
+      );
+
+      marker.style.setProperty(
+        "--fill-progress",
+        progress
+      );
+    });
+  };
+
+  let ticking = false;
+
+  const handleScroll = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateJourneyProgress();
+        ticking = false;
+      });
+
+      ticking = true;
+    }
+  };
+
+  updateJourneyProgress();
+
+  window.addEventListener("scroll", handleScroll, {
+    passive: true,
+  });
+
+  window.addEventListener("resize", updateJourneyProgress);
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("resize", updateJourneyProgress);
+  };
+}, []);
+
+return (
+  <div className={dark ? "app dark" : "app"}>
+    <StarBackground />
       {/* NAVIGATION */}
       <header className="navbar">
         <a href="#home" className="logo">
@@ -570,7 +975,7 @@ function App() {
             </a>
 
             <a
-              href="/julia-cv.pdf"
+              href="/julia_resume.pdf"
               download
               className="button outline"
             >
@@ -579,7 +984,9 @@ function App() {
           </div>
         </div>
 
-        {/* Optional portrait image can go here. */}
+        {/* <div className="hero-image">
+          <img src="/me_photo.png" alt="Portrait of Julia" />
+        </div> */}
       </section>
 
       {/* ABOUT + CERTIFICATIONS */}
@@ -590,22 +997,51 @@ function App() {
               A Little About <span>Me.</span>
             </h2>
 
-            <p>
-              I'm Julia, a full-stack developer, illustrator,
-              and aspiring data scientist. I enjoy combining
-              creativity and technology to create meaningful
-              digital experiences.
-            </p>
+            <div className="about-intro-grid">
+              <div className="about-tag-group">
+                <h3>I am...</h3>
 
-            <p>
-              I love learning new technologies, exploring
-              creative ideas, and challenging myself to grow
-              both personally and professionally.
-            </p>
+                <div className="about-tag-list">
+                  {[
+                    "An INFP",
+                    "Creative",
+                    "Curious-minded",
+                    "Imaginative",
+                    "Detail-oriented",
+                    "A learner",
+                    "Adaptable",
+                    "A problem-solver",
+                    "A team player",
+                  ].map((item) => (
+                    <span className="about-tag" key={item}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-            <div className="about-highlight">
-              <span className="highlight-dot"></span>
-              Always learning. Always creating.
+              <div className="about-tag-group">
+                <h3>I enjoy...</h3>
+
+                <div className="about-tag-list">
+                  {[
+                    "Making art",
+                    "Digital illustration",
+                    "Crafting",
+                    "Coding",
+                    "Creative projects",
+                    "Exploring new things",
+                    "Learning",
+                    "Gaming",
+                    "Reading",
+                    "Movies & Series",
+                  ].map((item) => (
+                    <span className="about-tag" key={item}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -673,22 +1109,87 @@ function App() {
         </div>
       </section>
 
+      {/* TECHNICAL PROFICIENCY */}
+      <section className="tech-section" id="tech-stack">
+        <div className="tech-container">
+          <div className="tech-heading">
+           
+            <h2>
+              Technical <span>Proficiency.</span>
+            </h2>
+          </div>
+
+{/* CATEGORY FILTERS */}
+<div className="skill-categories">
+  {skillCategories.map((category) => (
+    <button
+      key={category}
+      className={`skill-category-button ${
+        activeSkillCategory === category ? "active" : ""
+      }`}
+      onClick={() =>
+        setActiveSkillCategory((current) =>
+          current === category ? null : category
+        )
+      }
+    >
+      {category}
+    </button>
+  ))}
+</div>
+
+{/* RANDOMIZED, ORGANIC LOGO CLOUD */}
+<div className="skills-cloud">
+  {randomizedSkills.map((skill) => {
+    const isHighlighted =
+      activeSkillCategory === null ||
+      activeSkillCategory === skill.category;
+
+    return (
+      <div
+        className={`floating-skill ${
+          isHighlighted ? "highlighted" : "muted"
+        }`}
+        key={skill.name}
+        style={{
+          "--skill-color": skill.color,
+          "--skill-size": `${skill.size}px`,
+          left: skill.position.left,
+          top: skill.position.top,
+        }}
+        title={skill.name}
+      >
+        <div className="floating-skill-icon">
+          {skill.icon}
+        </div>
+
+        <span className="skill-tooltip">
+          {skill.name}
+        </span>
+      </div>
+    );
+  })}
+</div>
+
+  
+        </div>
+      </section>
+
       {/* MY JOURNEY */}
       <section className="journey-section" id="journey">
         <div className="journey-container">
           <div className="journey-heading">
-            <span className="eyebrow">MY JOURNEY</span>
-
+            
             <h2>
               Experiences, Education,
               <br />
               and <span>Affiliations</span>
             </h2>
-
+{/* 
             <p>
               A look at the experiences, milestones, and communities
               that have shaped my journey.
-            </p>
+            </p> */}
 
             <div className="journey-heading-line"></div>
           </div>
@@ -708,10 +1209,10 @@ function App() {
                   key={`${item.organization}-${item.title}`}
                 >
                   <div className="journey-card">
-                    <span className="journey-category">
+                    {/* <span className="journey-category">
                       <JourneyIcon size={18} />
                       {item.category}
-                    </span>
+                    </span> */}
 
                     <h3>{item.title}</h3>
 
@@ -721,7 +1222,6 @@ function App() {
                       {item.date}
                     </span>
 
-                    {/* Details appear in a hover popup */}
                     <div className="journey-hover-details">
                       <ul>
                         {item.highlights.slice(0, 2).map(
@@ -739,40 +1239,6 @@ function App() {
                     <JourneyIcon size={25} />
                   </div>
                 </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* TECH STACK */}
-      <section className="tech-section section-container" id="tech-stack">
-        <div className="tech-description">
-          <h2>
-            Tech <span>Stack</span>
-          </h2>
-
-          <p>
-            A blend of modern technologies to bring ideas to life.
-          </p>
-        </div>
-
-        <div className="skills-window">
-          <div className="skills-track">
-            {[...skills, ...skills].map((skill, index) => {
-              const SkillIcon = skill.icon;
-
-              return (
-                <div
-                  className="skill-card"
-                  key={`${skill.name}-${index}`}
-                >
-                  <SkillIcon
-                    className="skill-icon"
-                    style={{ color: skill.color }}
-                  />
-                  <small>{skill.name}</small>
-                </div>
               );
             })}
           </div>
@@ -856,8 +1322,7 @@ function App() {
       {/* CONTACT */}
       <section className="contact section-container" id="contact">
         <div className="contact-content">
-          <span className="eyebrow">✦ GET IN TOUCH</span>
-
+          
           <h2>
             Let's Build Something <br />
             Amazing <span>Together</span>
@@ -869,7 +1334,7 @@ function App() {
           </p>
 
           <a
-            href="/julia-cv.pdf"
+            href="/julia_resume.pdf"
             download
             className="button primary"
           >
@@ -884,7 +1349,7 @@ function App() {
             rel="noreferrer"
             aria-label="LinkedIn"
           >
-            <BriefcaseBusiness />
+            <FaLinkedin />
           </a>
 
           <a
@@ -893,7 +1358,7 @@ function App() {
             rel="noreferrer"
             aria-label="GitHub"
           >
-            <Code />
+            <FaGithub />
           </a>
 
           <a
@@ -901,8 +1366,9 @@ function App() {
             target="_blank"
             rel="noreferrer"
             aria-label="Facebook"
+            
           >
-            <Users />
+            <FaFacebook />
           </a>
         </div>
       </section>
