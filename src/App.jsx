@@ -22,6 +22,8 @@ import {
 import {FaLinkedin, FaGithub, FaFacebook} from "react-icons/fa";
 
 import StarBackground from "./star_background";
+import LanyardOverlay from "./components/Lanyard_overlay";
+import { IconCloud } from "./components/icon_cloud";
 
 import "./App.css";
 
@@ -707,7 +709,7 @@ function ProjectModal({ project, onClose }) {
 
           <p>{project.description}</p>
 
-          <h3>Technologies Used</h3>
+          <h3>Tech Stack</h3>
 
           <div className="tags">
             {project.stack.map((item) => (
@@ -725,138 +727,109 @@ function ProjectModal({ project, onClose }) {
 // =========================================
 
 function App() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [projectIndex, setProjectIndex] = useState(0);
   const [activeCertificate, setActiveCertificate] = useState(0);
   const [activeSkillCategory, setActiveSkillCategory] = useState(null);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-const [randomizedSkills] = useState(() => {
-  const storageKey = "julia-portfolio-skill-positions-v2";
-
-  const randomNormal = () => {
-    const u = Math.max(Math.random(), 0.0001);
-    const v = Math.random();
-
-    return Math.sqrt(-2 * Math.log(u)) *
-      Math.cos(2 * Math.PI * v);
-  };
-
-  const clamp = (value, min, max) =>
-    Math.min(max, Math.max(min, value));
-
-  let savedPositions = null;
-
-  try {
-    savedPositions = JSON.parse(
-      localStorage.getItem(storageKey)
-    );
-  } catch {
-    savedPositions = null;
-  }
-
-  const hasValidPositions =
-    savedPositions &&
-    skills.every(
-      (skill) =>
-        savedPositions[skill.name]?.left &&
-        savedPositions[skill.name]?.top
-    );
-
-  if (!hasValidPositions) {
-    savedPositions = {};
-
-    // Shuffle skills so categories are mixed together.
-    const shuffledSkills = [...skills].sort(
-      () => Math.random() - 0.5
-    );
-
-    const placedSkills = [];
-
-    shuffledSkills.forEach((skill) => {
-      let bestPosition = null;
-      let bestScore = -Infinity;
-
-      // Try multiple positions to find a good spot.
-      for (let attempt = 0; attempt < 1000; attempt++) {
-        const spread = Math.random() < 0.85 ? 15 : 23;
-
-        const left = clamp(
-          50 + randomNormal() * spread,
-          12,
-          88
-        );
-
-        const top = clamp(
-          50 + randomNormal() * spread,
-          10,
-          90
-        );
-
-        let valid = true;
-        let score = Infinity;
-
-        for (const other of placedSkills) {
-          // Approximate distance using a 1100 × 460 cloud.
-          const dx = (left - other.left) * 11;
-          const dy = (top - other.top) * 4.6;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          const sameCategory =
-            skill.category === other.category;
-
-          // Same-category logos need more breathing room.
-          const minimumDistance = sameCategory
-            ? Math.max(95, (skill.size + other.size) / 2 + 25)
-            : 48;
-
-          if (distance < minimumDistance) {
-            valid = false;
-            break;
-          }
-
-          score = Math.min(score, distance);
-        }
-
-        if (valid) {
-          bestPosition = { left, top };
-          break;
-        }
-
-        // Remember the least crowded candidate as a fallback.
-        if (score > bestScore) {
-          bestScore = score;
-          bestPosition = { left, top };
-        }
+  useEffect(() => {
+    let active = true;
+    const minimumDisplayTime = new Promise((resolve) => {
+      window.setTimeout(resolve, 700);
+    });
+    const fontsReady = document.fonts?.ready || Promise.resolve();
+    const imagesReady = Array.from(document.images).map((image) => {
+      if (image.complete) {
+        return Promise.resolve();
       }
 
-      savedPositions[skill.name] = {
-        left: `${bestPosition.left}%`,
-        top: `${bestPosition.top}%`,
-      };
-
-      placedSkills.push({
-        ...skill,
-        left: bestPosition.left,
-        top: bestPosition.top,
+      return new Promise((resolve) => {
+        image.addEventListener("load", resolve, { once: true });
+        image.addEventListener("error", resolve, { once: true });
       });
     });
 
-    try {
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify(savedPositions)
-      );
-    } catch {
-      // Keep the generated positions for this page session.
-    }
-  }
+    const loadingTasks = Promise.all([
+      fontsReady,
+      Promise.all(imagesReady),
+      minimumDisplayTime,
+    ]);
+    const loadingTimeout = new Promise((resolve) => {
+      window.setTimeout(resolve, 4000);
+    });
 
-  return skills.map((skill) => ({
-    ...skill,
-    position: savedPositions[skill.name],
-  }));
-});
+    Promise.race([loadingTasks, loadingTimeout])
+      .then(() => {
+        if (active) {
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let frame = 0;
+    let lastSidebarState = false;
+
+    const updateSidebar = () => {
+      const viewportPosition = window.scrollY + window.innerHeight / 2;
+      const sidebarSections = ["about", "skills", "journey", "projects", "contact"];
+      const isInSidebarSection = sidebarSections.some((sectionId) => {
+        const section = document.getElementById(sectionId);
+
+        if (!section) {
+          return false;
+        }
+
+        const sectionRect = section.getBoundingClientRect();
+        const sectionTop = sectionRect.top + window.scrollY;
+        const sectionBottom = sectionRect.bottom + window.scrollY;
+
+        return sectionTop <= viewportPosition && sectionBottom > viewportPosition;
+      });
+
+      if (isInSidebarSection !== lastSidebarState) {
+        lastSidebarState = isInSidebarSection;
+        setShowSidebar(isInSidebarSection);
+      }
+      frame = 0;
+    };
+
+    const handleScroll = () => {
+      if (!frame) {
+        frame = window.requestAnimationFrame(updateSidebar);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    updateSidebar();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+      }
+    };
+  }, []);
+
+const displayedSkills = activeSkillCategory
+  ? skills.filter((skill) => skill.category === activeSkillCategory)
+  : skills;
+
+const iconCloudImages = displayedSkills.map(
+  (skill) => skill.icon.props.src
+);
 
   // Project navigation
   const nextProject = () => {
@@ -935,15 +908,20 @@ useEffect(() => {
 return (
   <div className={dark ? "app dark" : "app"}>
     <StarBackground />
+    <div className={`page-loader ${isLoading ? "" : "page-loader-hidden"}`} aria-hidden={!isLoading}>
+      <div className="loader-mark">Julia<span>.</span></div>
+      <div className="loader-bar" />
+    </div>
+
       {/* NAVIGATION */}
-      <header className="navbar">
-        <a href="#home" className="logo">
+<header className={`navbar ${showSidebar ? "navbar-sidebar" : "navbar-hidden"}`}>
+        <a href="#home" className="logo" aria-label="Go to home">
           Julia<span>.</span>
         </a>
 
         <nav>
-          <a href="#home">Home</a>
           <a href="#about">About</a>
+          <a href="#skills">Skills</a>
           <a href="#journey">Journey</a>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
@@ -961,6 +939,7 @@ return (
       {/* HOME */}
       <section className="hero section-container" id="home">
         <div className="hero-content">
+          
           <h1>
             Hi, I'm <span>Julia!</span>
           </h1>
@@ -984,6 +963,8 @@ return (
           </div>
         </div>
 
+     <LanyardOverlay />
+
         {/* <div className="hero-image">
           <img src="/me_photo.png" alt="Portrait of Julia" />
         </div> */}
@@ -994,7 +975,7 @@ return (
         <div className="about-container">
           <div className="about-content">
             <h2>
-              A Little About <span>Me.</span>
+              A Little About Me
             </h2>
 
             <div className="about-intro-grid">
@@ -1109,37 +1090,42 @@ return (
         </div>
       </section>
 
-      {/* TECHNICAL PROFICIENCY */}
-      <section className="tech-section" id="tech-stack">
-        <div className="tech-container">
-          <div className="tech-heading">
-           
-            <h2>
-              Technical <span>Proficiency.</span>
-            </h2>
-          </div>
+     {/* TECHNICAL PROFICIENCY */}
+<section className="tech-section" id="skills">
+  <div className="tech-container">
+    <div className="tech-heading">
+      <h2>
+        Technical Skills
+      </h2>
+    </div>
 
-{/* CATEGORY FILTERS */}
-<div className="skill-categories">
-  {skillCategories.map((category) => (
-    <button
-      key={category}
-      className={`skill-category-button ${
-        activeSkillCategory === category ? "active" : ""
-      }`}
-      onClick={() =>
-        setActiveSkillCategory((current) =>
-          current === category ? null : category
-        )
-      }
-    >
-      {category}
-    </button>
-  ))}
-</div>
+    {/* CATEGORY FILTERS */}
+    <div className="skill-categories">
+      {skillCategories.map((category) => (
+        <button
+          key={category}
+          className={`skill-category-button ${
+            activeSkillCategory === category ? "active" : ""
+          }`}
+          onClick={() =>
+            setActiveSkillCategory((current) =>
+              current === category ? null : category
+            )
+          }
+        >
+          {category}
+        </button>
+      ))}
+    </div>
 
+    {/* 3D ICON CLOUD */}
+    <div className="icon-cloud-wrapper">
+      <IconCloud images={iconCloudImages} />
+    </div>
+ 
+ 
 {/* RANDOMIZED, ORGANIC LOGO CLOUD */}
-<div className="skills-cloud">
+{/* <div className="skills-cloud">
   {randomizedSkills.map((skill) => {
     const isHighlighted =
       activeSkillCategory === null ||
@@ -1169,11 +1155,11 @@ return (
       </div>
     );
   })}
-</div>
+</div> */}
 
   
         </div>
-      </section>
+      </section> 
 
       {/* MY JOURNEY */}
       <section className="journey-section" id="journey">
@@ -1183,7 +1169,7 @@ return (
             <h2>
               Experiences, Education,
               <br />
-              and <span>Affiliations</span>
+              and Affiliations
             </h2>
 {/* 
             <p>
@@ -1256,7 +1242,7 @@ return (
         </div>
 
         <div className="project-grid">
-          {orderedProjects.map((project) => (
+          {orderedProjects.slice(0, 3).map((project) => (
             <article
               className="project-card"
               key={project.title}
@@ -1325,7 +1311,7 @@ return (
           
           <h2>
             Let's Build Something <br />
-            Amazing <span>Together</span>
+            Amazing Together
           </h2>
 
           <p>
@@ -1344,7 +1330,7 @@ return (
 
         <div className="social-links">
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/in/julia-verzosa-55b355307/"
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
@@ -1353,7 +1339,7 @@ return (
           </a>
 
           <a
-            href="https://github.com/"
+            href="https://github.com/juliaverzosa"
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
@@ -1362,7 +1348,7 @@ return (
           </a>
 
           <a
-            href="https://www.facebook.com/"
+            href="https://www.facebook.com/julia.verzosa"
             target="_blank"
             rel="noreferrer"
             aria-label="Facebook"
