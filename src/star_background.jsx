@@ -20,11 +20,11 @@ const createStars = (count) =>
   }));
 
 const starLayers = [
-  { id: "stars-tiny", count: 300 },
-  { id: "stars-small", count: 320 },
-  { id: "stars-medium", count: 160 },
-  { id: "stars-large", count: 65 },
-  { id: "stars-bright", count: 28 },
+  { id: "stars-tiny", count: 180 },
+  { id: "stars-small", count: 180 },
+  { id: "stars-medium", count: 90 },
+  { id: "stars-large", count: 36 },
+  { id: "stars-bright", count: 16 },
 ];
 
 const shadows = starLayers.map((layer) => ({
@@ -48,20 +48,29 @@ function StarBackground() {
     const pointer = { x: 0, y: 0, active: false };
     let burst = null;
     let frame = 0;
+    const stars = Array.from(background.querySelectorAll(".star-dot"), (star) => ({
+      element: star,
+      xPercent: Number(star.dataset.x),
+      yPercent: Number(star.dataset.y),
+    }));
 
     const updateStars = () => {
-      const stars = background.querySelectorAll(".star-dot");
-
       stars.forEach((star) => {
-        const x = Number(star.dataset.x) * window.innerWidth / 100;
-        const y = Number(star.dataset.y) * window.innerHeight / 100;
+        const {
+          element,
+          xPercent,
+          yPercent,
+        } = star;
+        const x = xPercent * window.innerWidth / 100;
+        const y = yPercent * window.innerHeight / 100;
         const dx = x - pointer.x;
         const dy = y - pointer.y;
-        const distance = Math.hypot(dx, dy);
+        const distanceSquared = dx * dx + dy * dy;
         const radius = 220;
         const influence = pointer.active
-          ? Math.max(0, 1 - distance / radius) ** 2
+          ? Math.max(0, 1 - Math.sqrt(distanceSquared) / radius) ** 2
           : 0;
+        const distance = Math.sqrt(distanceSquared);
         const directionX = distance ? dx / distance : 0;
         const directionY = distance ? dy / distance : 0;
 
@@ -88,7 +97,7 @@ function StarBackground() {
           offsetY += burstDirectionY * burstInfluence * burst.strength;
         }
 
-        star.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        element.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
       });
 
       if (burst) {

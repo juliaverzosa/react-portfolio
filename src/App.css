@@ -1253,6 +1253,15 @@ overflow: visible;
     animation: none;
   }
 
+  .star-layer,
+  .star-dot {
+    animation: none;
+  }
+
+  .star-dot {
+    transition: none;
+  }
+
   .floating-skill-icon,
   .skill-tooltip {
     transition: none;
@@ -2224,8 +2233,12 @@ overflow: visible;
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: var(--card-bg, #171419);
+  background: var(--surface);
   border: 1px solid var(--accent, #ff3d9a);
+}
+
+.app.dark .journey-marker {
+  background: #171419;
 }
 
 /* Pink fill animation */
@@ -2379,6 +2392,11 @@ overflow: visible;
 
 .navbar.navbar-sidebar nav a:hover {
   color: var(--accent);
+}
+
+.navbar.navbar-sidebar nav a.active {
+  color: var(--accent);
+  font-weight: 700;
 }
 
 .navbar.navbar-sidebar .logo {

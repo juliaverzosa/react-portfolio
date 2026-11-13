@@ -733,6 +733,7 @@ function App() {
   const [activeCertificate, setActiveCertificate] = useState(0);
   const [activeSkillCategory, setActiveSkillCategory] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -781,11 +782,12 @@ function App() {
   useEffect(() => {
     let frame = 0;
     let lastSidebarState = false;
+    let lastActiveSection = "";
 
     const updateSidebar = () => {
       const viewportPosition = window.scrollY + window.innerHeight / 2;
       const sidebarSections = ["about", "skills", "journey", "projects", "contact"];
-      const isInSidebarSection = sidebarSections.some((sectionId) => {
+      const currentSection = ["home", ...sidebarSections].find((sectionId) => {
         const section = document.getElementById(sectionId);
 
         if (!section) {
@@ -798,10 +800,15 @@ function App() {
 
         return sectionTop <= viewportPosition && sectionBottom > viewportPosition;
       });
+      const isInSidebarSection = sidebarSections.includes(currentSection);
 
       if (isInSidebarSection !== lastSidebarState) {
         lastSidebarState = isInSidebarSection;
         setShowSidebar(isInSidebarSection);
+      }
+      if (currentSection !== lastActiveSection) {
+        lastActiveSection = currentSection || "";
+        setActiveSection(lastActiveSection);
       }
       frame = 0;
     };
@@ -920,11 +927,22 @@ return (
         </a>
 
         <nav>
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#journey">Journey</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
+          {[
+            ["about", "About"],
+            ["skills", "Skills"],
+            ["journey", "Journey"],
+            ["projects", "Projects"],
+            ["contact", "Contact"],
+          ].map(([sectionId, label]) => (
+            <a
+              key={sectionId}
+              href={`#${sectionId}`}
+              className={activeSection === sectionId ? "active" : ""}
+              aria-current={activeSection === sectionId ? "page" : undefined}
+            >
+              {label}
+            </a>
+          ))}
         </nav>
 
         <button
